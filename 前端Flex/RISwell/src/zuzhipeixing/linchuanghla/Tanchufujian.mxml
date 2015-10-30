@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" width="560" height="300"
+		   creationComplete="module1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.serialization.json.JSON;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			import mx.managers.PopUpManager;
+			
+			import spark.layouts.RowAlign;
+			
+			private var xiazai:FileReference;
+			
+			[Bindable]
+			public  var shuju:ArrayCollection;
+			
+			
+			
+			//			关闭弹窗
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			
+			//表格添加点击监听事件
+			protected function module1_creationCompleteHandler(event:FlexEvent):void
+			{
+				biaoge.addEventListener(ListEvent.ITEM_CLICK,biaogedanji);
+			}
+			
+			
+			//表格点击事件处理
+			private  function biaogedanji(evt:ListEvent):void
+			{
+				if(biaoge.columns[evt.columnIndex].headerText=="下载")
+				{
+					var url:URLRequest = new URLRequest();
+					var canshu:URLVariables = new URLVariables();
+					canshu.json=JSON.encode(shuju.getItemAt(evt.rowIndex));
+					
+					url.url="/xiazaiwenjian";
+					url.data=canshu;
+					xiazai = new FileReference();
+					xiazai.download(url,shuju.getItemAt(evt.rowIndex).yuanwenjianming);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:TitleWindow x="0" y="0" width="100%" height="100%" title="附件" close="titlewindow1_closeHandler(event)">
+		<mx:DataGrid x="0" y="0" width="100%" height="100%"   borderVisible="false" dataProvider="{shuju}" id="biaoge">
+			<mx:columns>
+				<mx:DataGridColumn  dataField="yuanwenjianming" headerText="文件名"/>
+				<mx:DataGridColumn dataField="chuangjianshijian" headerText="创建时间" width="80" resizable="false"/>
+				<mx:DataGridColumn width="100" resizable="false" headerText="下载">
+					<mx:itemRenderer>  
+						<fx:Component>  
+							<mx:LinkButton  label="点击下载" color="#4971F3">  
+							</mx:LinkButton>  
+						</fx:Component>  
+					</mx:itemRenderer>  
+				</mx:DataGridColumn>
+			</mx:columns>
+		</mx:DataGrid>
+	</s:TitleWindow>
+</mx:Module>

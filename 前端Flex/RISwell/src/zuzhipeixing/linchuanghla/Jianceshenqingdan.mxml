@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" width="100%" height="100%" borderVisible="false"
+		   creationComplete="module1_creationCompleteHandler(event)">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.serialization.json.JSON;
+			
+			import mx.binding.utils.BindingUtils;
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			import mx.formatters.DateFormatter;
+			import mx.managers.PopUpManager;
+			import mx.rpc.events.ResultEvent;
+			
+			import util.WenJianXiaZai;
+			
+			[Bindable]
+			var biaogeshuju:ArrayCollection=new ArrayCollection();
+			
+			var xiazaiqi:WenJianXiaZai=new WenJianXiaZai();
+			
+			//添加申请单按钮点击事件处理
+			protected function tianjiashenqingdanannniu_clickHandler(event:MouseEvent):void
+			{
+				var pop:Tianjiashengqingdan=new Tianjiashengqingdan();
+				pop.x=(parentApplication.width-pop.width)/2;
+				pop.y=(parentApplication.height-pop.height)/2;
+				PopUpManager.addPopUp(pop,this,true);
+				
+			}
+			
+			//查询结果
+			protected function chaxunanniu_clickHandler(event:MouseEvent):void
+			{
+				var ls:Object=new Object();
+				ls.huanzhexingming=chaxunhuanzhexingming.text;
+				ls.diuqi=new Date();
+				chaxunhttp.send(ls);
+			}
+			
+			//			查询结果处理
+			protected function chaxunhttp_resultHandler(event:ResultEvent):void
+			{
+				biaogeshuju=new ArrayCollection( JSON.decode( event.result as String));
+			}
+			
+			
+			//给表格添加点击事件
+			protected function module1_creationCompleteHandler(event:FlexEvent):void
+			{
+				biaogeshenqingdan.addEventListener(ListEvent.ITEM_CLICK,biaogedanji);
+			}
+			
+			//表格点击事件处理
+			private  function biaogedanji(evt:ListEvent):void
+			{
+				if(biaogeshenqingdan.columns[evt.columnIndex].headerText=="附件")
+				{
+					var ls:Array=biaogeshuju[evt.rowIndex].fujian;
+					var tanchu:Tanchufujian=new Tanchufujian();
+					tanchu.shuju=new ArrayCollection(ls);
+					PopUpManager.addPopUp(tanchu,this,true);
+					PopUpManager.centerPopUp(tanchu);
+				
+				}
+			}
+
+			//点击下载报表
+			protected function dayinbaobiao_clickHandler(event:MouseEvent):void
+			{
+				xiazaiqi.s1setURL("/zuzhipeixing/linchuanghla/xiazaibaobiao");
+				var ls:Object=new Object();
+				ls.canshu=new Date();
+				xiazaiqi.s2setCanShu(ls);
+				xiazaiqi.s3xiaZai("shiyan.doc");
+			}
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<s:HTTPService url="/zuzhipeixing/linchuanghla/chaxunshenqingdan" id="chaxunhttp" result="chaxunhttp_resultHandler(event)"/>
+	</fx:Declarations>
+	<s:Panel x="0" y="0" width="100%" height="100%" dropShadowVisible="false" borderColor="#CCCCCC" title="检测申请单">
+		<s:BorderContainer x="0" y="0" width="100%" height="70" borderVisible="false">
+			<s:TextInput x="284" y="38"/>
+			<mx:VRule x="200" y="0" height="100%"/>
+			<s:Button x="10" y="10.5" label="添加申请单" id="tianjiashenqingdanannniu" click="tianjiashenqingdanannniu_clickHandler(event)" width="80"/>
+			<s:TextInput x="284" y="10" id="chaxunhuanzhexingming"/>
+			<s:Label x="222" y="15" text="患者姓名"/>
+			<s:Button x="108" y="10.5" label="查询" id="chaxunanniu" click="chaxunanniu_clickHandler(event)"/>
+			<s:Button x="10" y="38.5" label="下载报表" width="80" id="dayinbaobiao" click="dayinbaobiao_clickHandler(event)"/>
+		</s:BorderContainer>
+		<s:BorderContainer x="0" y="70" width="100%" height="100%" borderVisible="true" borderColor="#CCCCCC">
+			<mx:DataGrid x="0" y="0" borderVisible="false" width="100%" height="100%" dataProvider="{biaogeshuju}"  id="biaogeshenqingdan">
+				<mx:columns>
+					<mx:DataGridColumn headerText="患者姓名" dataField="huanzhexingming"/>
+					<mx:DataGridColumn headerText="性别" dataField="xingbie"/>
+					<mx:DataGridColumn headerText="出生日期"  dataField="chushengriqi" >
+						
+					</mx:DataGridColumn>
+					<mx:DataGridColumn dataField="zhuyuan" headerText="住院">
+						<mx:itemRenderer>  
+							<fx:Component>  
+								<mx:CheckBox textAlign="center" selected="{data.zhuyuan}" enabled="false" >  
+								</mx:CheckBox>  
+							</fx:Component>  
+						</mx:itemRenderer>  
+					</mx:DataGridColumn>
+					<mx:DataGridColumn dataField="menzhen" headerText="门诊">
+						<mx:itemRenderer>  
+							<fx:Component>  
+								<mx:CheckBox textAlign="center" selected="{data.menzhen}" enabled="false" >  
+								</mx:CheckBox>  
+							</fx:Component>  
+						</mx:itemRenderer>  
+					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="附件">
+						<mx:itemRenderer>  
+							<fx:Component>  
+								<mx:LinkButton  label="点击查看" color="#4971F3">  
+								</mx:LinkButton>  
+							</fx:Component>  
+						</mx:itemRenderer>  
+					</mx:DataGridColumn>
+				</mx:columns>
+			</mx:DataGrid>
+		</s:BorderContainer>
+	</s:Panel>
+</mx:Module>

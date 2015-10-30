@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" width="900" height="240" dropShadowVisible="false" borderVisible="false"
+		   >
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			import mx.rpc.events.ResultEvent;
+			
+			import util.WenJianShangChuan;
+			
+			var xingbieshuju:ArrayCollection=new ArrayCollection(["男","女","未知"]);
+			var shangchuan:WenJianShangChuan=new WenJianShangChuan();
+		
+			
+			protected function titlewindow1_closeHandler(event:CloseEvent):void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			protected function tianjiaanniu_clickHandler(event:MouseEvent):void
+			{
+				var ls:Object=new Object();
+				ls.huanzhexingming=huanzhexingming.text;
+				ls.xingbie=xingbie.selectedItem;
+				ls.chushengriqi=chushengriqi.text;
+				ls.zhuyuan=zhuyuan.selected;
+				ls.menzhen=menzhen.selected;
+				ls.wenjian=shangchuan.s4wenjianmings();
+				tianjiashenqingdanhttp.send(ls);
+			}
+			
+
+			protected function tianjiashenqingdanhttp_resultHandler(event:ResultEvent):void
+			{
+				shangchuan.s5shangchuan(event);
+				PopUpManager.removePopUp(this);
+			}
+
+			protected function tianjianfujiananniu_clickHandler(event:MouseEvent):void
+			{
+				shangchuan.s1guolvqi="*.pdf;*.xls";
+				shangchuan.s2xuanzewanbi(function():void{fujian.text="选择"+shangchuan.s4wenjianmings().length+"个文件";});
+				shangchuan.s3xuanzewenjian();
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:HTTPService url="/zuzhipeixing/linchuanghla/tianjiashenqingdan" id="tianjiashenqingdanhttp" result="tianjiashenqingdanhttp_resultHandler(event)"/>
+	</fx:Declarations>
+	<s:TitleWindow x="0" y="0" width="100%" height="100%" close="titlewindow1_closeHandler(event)" title="添加检测申请单" id="zhujiemian">
+		<s:controlBarContent>
+			<mx:Spacer x="-12" y="219" width="792" height="20"/>
+			<s:Button label="添加" id="tianjiaanniu" click="tianjiaanniu_clickHandler(event)"/>
+			
+		</s:controlBarContent>
+		<mx:Form x="0" y="0" width="300" height="100%">
+			<mx:FormItem label="患者姓名">
+				<s:TextInput id="huanzhexingming" width="128" height="22"/>
+			</mx:FormItem>
+			<mx:FormItem label="性别">
+				<s:DropDownList x="55" y="3" width="128" id="xingbie" dataProvider="{xingbieshuju}"></s:DropDownList>
+			</mx:FormItem>
+			<mx:FormItem label="出生日期">
+				<mx:DateField id="chushengriqi" width="128" formatString="YYYY-MM-DD"/>
+			</mx:FormItem>
+		</mx:Form>
+		<mx:Form x="300" y="0" width="300" height="100%">
+			<mx:FormItem label="住院">
+				<s:CheckBox id="zhuyuan"/>
+			</mx:FormItem>
+			<mx:FormItem label="门诊">
+				<s:CheckBox id="menzhen"/>
+			</mx:FormItem>
+		</mx:Form>
+		<mx:Form x="600" y="0" width="300" height="100%">
+			<mx:FormItem label="附件" textAlign="left">
+				<s:HGroup x="35" y="1" width="182" height="22">
+					<s:TextInput width="158" id="fujian" height="22"/>
+					<s:Button width="20" id="tianjianfujiananniu" click="tianjianfujiananniu_clickHandler(event)" height="22"/>
+				</s:HGroup>
+			</mx:FormItem>
+		</mx:Form>
+	</s:TitleWindow>
+</mx:Module>

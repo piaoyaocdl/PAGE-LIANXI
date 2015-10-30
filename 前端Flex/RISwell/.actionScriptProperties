@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<actionScriptProperties mainApplicationPath="app/RISwell.mxml" projectUUID="9b07e582-37f1-4e98-b302-473b270e0d4d" version="6">
+  <compiler additionalCompilerArguments="-locale zh_CN" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="true" outputFolderLocation="F:/WorkSpacesEclipse/RISwell/src/main/resources/static/RISwell" outputFolderPath="bin-debug" rootURL="" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+    <compilerSourcePath/>
+    <libraryPath defaultLinkType="0">
+      <libraryPathEntry kind="4" path="">
+        <excludedEntries>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flex.swc" useDefaultLinkType="false"/>
+        </excludedEntries>
+      </libraryPathEntry>
+      <libraryPathEntry kind="1" linkType="1" path="libs"/>
+    </libraryPath>
+    <sourceAttachmentPath/>
+  </compiler>
+  <applications>
+    <application path="app/RISwell.mxml"/>
+  </applications>
+  <modules>
+    <module application="src/app/RISwell.mxml" destPath="zuzhipeixing/linchuanghla/Tianjiashengqingdan.swf" optimize="true" sourcePath="src/zuzhipeixing/linchuanghla/Tianjiashengqingdan.mxml"/>
+    <module application="src/app/RISwell.mxml" destPath="app/Gerenzhongxin.swf" optimize="true" sourcePath="src/app/Gerenzhongxin.mxml"/>
+    <module application="src/app/RISwell.mxml" destPath="zuzhipeixing/linchuanghla/Jianceshenqingdan.swf" optimize="true" sourcePath="src/zuzhipeixing/linchuanghla/Jianceshenqingdan.mxml"/>
+    <module application="src/app/RISwell.mxml" destPath="app/Zhujiemian.swf" optimize="true" sourcePath="src/app/Zhujiemian.mxml"/>
+    <module application="src/app/RISwell.mxml" destPath="app/Denglujiemian.swf" optimize="true" sourcePath="src/app/Denglujiemian.mxml"/>
+    <module application="src/app/RISwell.mxml" destPath="shiyan/shiyan01.swf" optimize="true" sourcePath="src/shiyan/shiyan01.mxml"/>
+    <module application="src/app/RISwell.mxml" destPath="zuzhipeixing/linchuanghla/Tanchufujian.swf" optimize="true" sourcePath="src/zuzhipeixing/linchuanghla/Tanchufujian.mxml"/>
+  </modules>
+  <buildCSSFiles/>
+</actionScriptProperties>
