@@ -70,9 +70,18 @@ public class GongJu
 	 */
 	public static String getXiangMuLuJing()
 	{
-		String ls = Thread.currentThread().getContextClassLoader().getResource(".").getPath();
+		String ls = GongJu.class.getClassLoader().getResource("").getPath();
+		String re = null;
+		if (ls.indexOf(".jar") >= 0)
+		{
+			re = ls.substring(6, ls.indexOf(".jar")-7);
+		}
 
-		return ls.substring(1).split("target")[0];
+		if (ls.indexOf("target") >= 0)
+		{
+			re = ls.substring(1, ls.indexOf("target"));
+		}
+		return re;
 	}
 
 	/**
@@ -84,16 +93,16 @@ public class GongJu
 	 *            要保存为
 	 *
 	 */
-	public static ResponseEntity<byte[]> xiazai(String wenjian,String wenjianjia, String baocunwei) throws IOException
+	public static ResponseEntity<byte[]> xiazai(String wenjian, String wenjianjia, String baocunwei) throws IOException
 	{
-		String path = GongJu.getXiangMuLuJing() +wenjianjia+ "/" + wenjian;
+		String path = GongJu.getXiangMuLuJing() + wenjianjia + "/" + wenjian;
 		File file = new File(path);
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentDispositionFormData("attachment",new String(baocunwei.getBytes(), "ISO8859-1") );
+		headers.setContentDispositionFormData("attachment", new String(baocunwei.getBytes(), "ISO8859-1"));
 		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 		return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
 	}
-	
+
 	public static ResponseEntity<byte[]> xiazai(String wenjian, String baocunwei) throws IOException
 	{
 		return GongJu.xiazai(wenjian, "上传文件", baocunwei);

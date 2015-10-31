@@ -1,5 +1,6 @@
 package riswell.config;
 
+import java.io.File;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -41,11 +42,11 @@ public class ChuShiHua implements ApplicationListener<ApplicationReadyEvent>
 	@Transactional
 	public void onApplicationEvent(ApplicationReadyEvent event)
 	{
-		/***********************************
+		/*********************************************************************************
 		 * 
 		 * 数据库初始化
 		 * 
-		 ************************************/
+		 *********************************************************************************/
 
 		Date dangqianshijian = new Date();
 
@@ -117,11 +118,25 @@ public class ChuShiHua implements ApplicationListener<ApplicationReadyEvent>
 		System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		System.err.println("");
 		System.err.println("");
-		System.err.println("");
-		System.err.println("");
-		System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-		System.err.println("项目路径：" + GongJu.getXiangMuLuJing());
-		System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+		/*********************************************************************************
+		 * 
+		 * 文件夹初始化
+		 * 
+		 *********************************************************************************/
+		File file = null;
+
+		file = new File(GongJu.getXiangMuLuJing() + "临时文件");
+		if (!file.exists() && !file.isDirectory())
+		{
+			file.mkdir();
+		}
+		
+		file = new File(GongJu.getXiangMuLuJing() + "上传文件");
+		if (!file.exists() && !file.isDirectory())
+		{
+			file.mkdir();
+		}
 
 	}
 
