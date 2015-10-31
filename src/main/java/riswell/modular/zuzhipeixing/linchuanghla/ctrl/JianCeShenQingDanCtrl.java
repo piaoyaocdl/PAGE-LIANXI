@@ -30,8 +30,8 @@ import riswell.modular.sysm.domain.WenJian;
 import riswell.modular.zuzhipeixing.linchuanghla.dao.JianCeShenQingDanDao;
 import riswell.modular.zuzhipeixing.linchuanghla.domain.JianCeShenQingDan;
 import riswell.util.GongJu;
-import riswell.util.XMLGongJu;
-import riswell.util.XMLGongJu.XMLType;
+import riswell.util.BaoBiaoGongJu;
+import riswell.util.BaoBiaoGongJu.TiHuanType;
 
 @Controller
 @RequestMapping("/zuzhipeixing/linchuanghla")
@@ -125,9 +125,9 @@ public class JianCeShenQingDanCtrl
 	{
 		List<JianCeShenQingDan> jc = jianceshengqingdandao.findAll();
 
-		Document doc = XMLGongJu.getDocument(GongJu.getXiangMuLuJing() + "报表模版/shiyan.xml");
+		Document doc = BaoBiaoGongJu.getDocument("shiyan.xml");
 		Element root = doc.getRootElement();
-		Element ele = XMLGongJu.getElement(root, "tihuan", XMLType.ID);
+		Element ele = BaoBiaoGongJu.getElement(root, "tihuan", TiHuanType.ID);
 		Element pa = ele.getParent();
 
 		for (int i = 0; i < jc.size(); i++)
@@ -137,7 +137,7 @@ public class JianCeShenQingDanCtrl
 			Element cl = (Element) ele.clone();
 			String pt;
 
-			e = XMLGongJu.getElement(cl, "aaaa", XMLType.TEXT);
+			e = BaoBiaoGongJu.getElement(cl, "aaaa", TiHuanType.TEXT);
 			if (ls.getHuanzhexingming() == null)
 			{
 				pt = "";
@@ -147,7 +147,7 @@ public class JianCeShenQingDanCtrl
 			}
 			e.setText(pt);
 
-			e = XMLGongJu.getElement(cl, "bbbb", XMLType.TEXT);
+			e = BaoBiaoGongJu.getElement(cl, "bbbb", TiHuanType.TEXT);
 			if (ls.getXingbie() == null)
 			{
 				pt = "";
@@ -157,7 +157,7 @@ public class JianCeShenQingDanCtrl
 			}
 			e.setText(pt);
 
-			e = XMLGongJu.getElement(cl, "cccc", XMLType.TEXT);
+			e = BaoBiaoGongJu.getElement(cl, "cccc", TiHuanType.TEXT);
 			if (ls.getChushengriqi() == null)
 			{
 				pt = "";
@@ -171,9 +171,10 @@ public class JianCeShenQingDanCtrl
 
 		}
 		pa.remove(ele);
-		XMLGongJu.xieXML(GongJu.getXiangMuLuJing() + "临时文件/shishi.doc", doc);
+		String wjm = Double.toString(Math.random()).substring(2) + Long.toString(System.currentTimeMillis()) + ".doc";
+		BaoBiaoGongJu.xieXML(GongJu.getXiangMuLuJing() + "临时文件/" + wjm, doc);
 
-		ResponseEntity<byte[]> ls = GongJu.xiazai("shishi.doc", "临时文件", "");
+		ResponseEntity<byte[]> ls = GongJu.xiazai(wjm, "临时文件", "");
 		return ls;
 	}
 }

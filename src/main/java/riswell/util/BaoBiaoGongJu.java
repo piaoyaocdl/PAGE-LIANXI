@@ -1,8 +1,8 @@
 package riswell.util;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,10 +13,10 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
-public class XMLGongJu
+public class BaoBiaoGongJu
 {
 
-	public static enum XMLType
+	public static enum TiHuanType
 	{
 		ID, TEXT;
 	}
@@ -34,8 +34,22 @@ public class XMLGongJu
 	public static void tiHuanWenBen(Document doc, String beitihuanwenben, String tihuanwenben)
 	{
 		Element root = doc.getRootElement();
-		Element ele = getElement(root, beitihuanwenben, XMLType.TEXT);
+		Element ele = getElement(root, beitihuanwenben, TiHuanType.TEXT);
 		ele.setText(tihuanwenben);
+	}
+
+	/**
+	 * @param ele
+	 * @param beitihuanwenben
+	 * @param tihuanwenben
+	 * @return 替换后的 ele的复制版本，
+	 */
+	public static Element tiHuanWenBen(Element ele, String beitihuanwenben, String tihuanwenben)
+	{
+		Element ls = (Element) ele.clone();
+		Element ls01 = getElement(ls, beitihuanwenben, TiHuanType.TEXT);
+		ls01.setText(tihuanwenben);
+		return ls;
 	}
 
 	/**
@@ -64,10 +78,12 @@ public class XMLGongJu
 	 * @return XML的内存文件
 	 * @throws DocumentException
 	 */
-	public static Document getDocument(String filePathAndName) throws DocumentException
+	public static Document getDocument(String fileName) throws DocumentException
 	{
+
+		URL ls = GongJu.getReportTemplate(fileName);
 		SAXReader reader = new SAXReader();
-		Document document = reader.read(new File(filePathAndName));
+		Document document = reader.read(ls);
 		return document;
 	}
 
@@ -82,7 +98,7 @@ public class XMLGongJu
 	 *            根据id找？还是text？
 	 * @return 子元素
 	 */
-	public static Element getElement(Element element, String idOrTextString, XMLType type)
+	public static Element getElement(Element element, String idOrTextString, TiHuanType type)
 	{
 		Element re = null;
 		List<?> list = element.elements();
@@ -98,11 +114,11 @@ public class XMLGongJu
 
 			String ls = null;
 
-			if (type == XMLType.ID)
+			if (type == TiHuanType.ID)
 			{
 				ls = chileEle.attributeValue("id");
 			}
-			if (type == XMLType.TEXT)
+			if (type == TiHuanType.TEXT)
 			{
 				ls = chileEle.getText();
 			}

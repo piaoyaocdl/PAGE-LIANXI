@@ -65,7 +65,7 @@ public class ChuShiHua implements ApplicationListener<ApplicationReadyEvent>
 		// 权限数据-开始copy
 
 		qxs = quanxiandao.findByUrl("/ceshi");
-		if (qxs.size() == 1)
+		if (qxs.size() >= 1)
 		{
 			quanxian = qxs.get(0);
 		} else
@@ -83,7 +83,7 @@ public class ChuShiHua implements ApplicationListener<ApplicationReadyEvent>
 		// 角色数据
 		List<JueSe> jueses = juesedao.findByJueseming("测试");
 		JueSe juese = null;
-		if (jueses.size() == 1)
+		if (jueses.size() >= 1)
 		{
 			juese = jueses.get(0);
 		} else
@@ -99,7 +99,7 @@ public class ChuShiHua implements ApplicationListener<ApplicationReadyEvent>
 		// 用户数据
 		List<YongHu> yonghus = yonghudao.findByZhanghao("ceshi");
 		YongHu yonghu = null;
-		if (yonghus.size() == 1)
+		if (yonghus.size() >= 1)
 		{
 			yonghu = yonghus.get(0);
 		} else
@@ -137,6 +137,21 @@ public class ChuShiHua implements ApplicationListener<ApplicationReadyEvent>
 		{
 			file.mkdir();
 		}
+		
+		System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.err.println("文件夹初始化完成！");
+		System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.err.println("");
+		System.err.println("");
+		
+		System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.err.println("项目路径：");
+		System.err.println("		"+GongJu.getXiangMuLuJing());
+		System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.err.println("");
+		System.err.println("");
+		
+		
 
 	}
 

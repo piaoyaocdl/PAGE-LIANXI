@@ -13,6 +13,6 @@ public class shiyan01
 	public void shiyan() throws DocumentException, IOException
 	{
 		URL ls = ClassLoader.getSystemResource("ReportTemplate/shiyan.xml");
-		System.out.println(ls);
+		System.out.println(ls.toString());
 	}
 }

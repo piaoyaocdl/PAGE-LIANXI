@@ -115,7 +115,8 @@ public class XiTongJianDan
 	/**
 	 * 系统所有级别的下载文件
 	 * 
-	 * @param wenJian
+	 * @param json
+	 *            WenJian类的JSON格式化
 	 * @return
 	 */
 	@RequestMapping("/xiazaiwenjian")
@@ -123,7 +124,7 @@ public class XiTongJianDan
 	@SneakyThrows
 	public ResponseEntity<byte[]> xiazaiwenjian(String json)
 	{
-		WenJian wenJian=JSON.parseObject(json, WenJian.class);
+		WenJian wenJian = JSON.parseObject(json, WenJian.class);
 		ResponseEntity<byte[]> ls = GongJu.xiazai(wenJian.getXinwenjianming(), wenJian.getYuanwenjianming());
 		return ls;
 	}

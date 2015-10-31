@@ -2,6 +2,7 @@ package riswell.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -74,7 +75,7 @@ public class GongJu
 		String re = null;
 		if (ls.indexOf(".jar") >= 0)
 		{
-			re = ls.substring(6, ls.indexOf(".jar")-7);
+			re = ls.substring(6, ls.indexOf(".jar") - 7);
 		}
 
 		if (ls.indexOf("target") >= 0)
@@ -106,5 +107,16 @@ public class GongJu
 	public static ResponseEntity<byte[]> xiazai(String wenjian, String baocunwei) throws IOException
 	{
 		return GongJu.xiazai(wenjian, "上传文件", baocunwei);
+	}
+
+	/**
+	 * 下载模版
+	 * 
+	 * @param mobanming
+	 * @return 
+	 */
+	public static URL getReportTemplate(String mobanming)
+	{
+		return ClassLoader.getSystemResource("ReportTemplate/"+mobanming);
 	}
 }
