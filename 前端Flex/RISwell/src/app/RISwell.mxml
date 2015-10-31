@@ -13,7 +13,7 @@
 			protected function application1_creationCompleteHandler(event:FlexEvent):void
 			{
 				denglujiemianjiazaiqi.unloadModule();
-				denglujiemianjiazaiqi.loadModule("/RISwell/app/denglujiemian.swf");
+				denglujiemianjiazaiqi.loadModule("/RISwell/app/Denglujiemian.swf");
 			}
 
 		]]>

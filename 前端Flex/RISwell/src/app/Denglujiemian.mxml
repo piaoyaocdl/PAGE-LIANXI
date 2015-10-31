@@ -31,7 +31,7 @@
 				{
 					 var jiazaiqi:ModuleLoader=this.parent as ModuleLoader ;
 					 jiazaiqi.unloadModule();
-					 jiazaiqi.loadModule("/RISwell/app/zhujiemian.swf");
+					 jiazaiqi.loadModule("/RISwell/app/Zhujiemian.swf");
 				}
 				
 				if(jieguo=="shibai")

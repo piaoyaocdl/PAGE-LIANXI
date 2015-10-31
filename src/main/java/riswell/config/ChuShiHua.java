@@ -25,7 +25,7 @@ import riswell.util.GongJu;
  * @author HSW 实现数据库初始化
  */
 @Component
-public class ShuJuKuChuShiHua implements ApplicationListener<ApplicationReadyEvent>
+public class ChuShiHua implements ApplicationListener<ApplicationReadyEvent>
 {
 
 	@Autowired
@@ -41,20 +41,28 @@ public class ShuJuKuChuShiHua implements ApplicationListener<ApplicationReadyEve
 	@Transactional
 	public void onApplicationEvent(ApplicationReadyEvent event)
 	{
+		/***********************************
+		 * 
+		 * 数据库初始化
+		 * 
+		 ************************************/
+
 		Date dangqianshijian = new Date();
 
-		// 版本设置
+		// ----------版本设置----------
 		BanBen banben = new BanBen();
 		banben.setChengxubanben("测试版本");
 		banben.setShujukubanben("测试版本");
 		banben.setKaishiriqi(dangqianshijian);
 		banbendao.save(banben);
 
-		// 数据库初始化--权限数据
+		// ----------数据库初始化----------
+		// 权限数据
 		QuanXian quanxian = null;
 		List<QuanXian> qxs = null;
 
-		// -----------开始copy--------------------------------------------
+		// 权限数据-开始copy
+
 		qxs = quanxiandao.findByUrl("/ceshi");
 		if (qxs.size() == 1)
 		{
@@ -68,9 +76,10 @@ public class ShuJuKuChuShiHua implements ApplicationListener<ApplicationReadyEve
 		quanxian.setMiaoshu("测试");
 		quanxian.setQuanxianming("测试");
 		quanxiandao.saveAndFlush(quanxian);
-		// -----------结束copy--------------------------------------------
 
-		// 数据库初始化--角色数据
+		// 权限数据-结束copy
+
+		// 角色数据
 		List<JueSe> jueses = juesedao.findByJueseming("测试");
 		JueSe juese = null;
 		if (jueses.size() == 1)
@@ -86,23 +95,34 @@ public class ShuJuKuChuShiHua implements ApplicationListener<ApplicationReadyEve
 		juese.setQuanxians(new HashSet<>(quanxians));
 		juese = juesedao.saveAndFlush(juese);
 
-		// 数据库初始化--用户数据
+		// 用户数据
 		List<YongHu> yonghus = yonghudao.findByZhanghao("ceshi");
-		YongHu yonghu=null;
-		if (yonghus.size()==1)
+		YongHu yonghu = null;
+		if (yonghus.size() == 1)
 		{
-			yonghu=yonghus.get(0);
-		}else {
-			yonghu=new YongHu();
+			yonghu = yonghus.get(0);
+		} else
+		{
+			yonghu = new YongHu();
 		}
-		
+
 		yonghu.setZhanghao("ceshi");
 		yonghu.setMima(GongJu.jiami_mima("ceshi"));
 		yonghu.setChuangjianriqi(dangqianshijian);
 		yonghu.setJueses(GongJu.list2set(juesedao.findByJueseming("测试")));
 		yonghudao.saveAndFlush(yonghu);
 
-		System.err.println("数据库初始化完成！！");
+		System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.err.println("数据库初始化完成！");
+		System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.err.println("");
+		System.err.println("");
+		System.err.println("");
+		System.err.println("");
+		System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.err.println("项目路径：" + GongJu.getXiangMuLuJing());
+		System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
 	}
 
 }

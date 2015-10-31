@@ -13,14 +13,14 @@
 			protected function zuzhipeixing_linchuanghla_jianceshenqingdan_clickHandler(event:MouseEvent):void
 			{
 				zhujiazaiqi.unloadModule();
-				zhujiazaiqi.loadModule("/RISwell/zuzhipeixing/linchuanghla/jianceshenqingdan.swf");
+				zhujiazaiqi.loadModule("/RISwell/zuzhipeixing/linchuanghla/Jianceshenqingdan.swf");
 			}
 
 			protected function module1_creationCompleteHandler(event:FlexEvent):void
 			{
 				dengchuanniu.x=toumokuai.width-20-dengchuanniu.width;
 				zhujiazaiqi.unloadModule();
-				zhujiazaiqi.loadModule("/RISwell/app/gerenzhongxin.swf");
+				zhujiazaiqi.loadModule("/RISwell/app/Gerenzhongxin.swf");
 			}
 
 
