@@ -108,6 +108,7 @@ public class JianCeShenQingDanCtrl
 			}
 		}
 		jianCeShenQingDan.setFujian(wenjians);
+		jianCeShenQingDan.setTianjiashijian(new Date());
 		jianceshengqingdandao.save(jianCeShenQingDan);
 		return JSON.toJSONString(re);
 	}

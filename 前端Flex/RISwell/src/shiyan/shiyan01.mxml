@@ -9,7 +9,7 @@
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 	</fx:Declarations>
-	<s:Button x="134" y="172" label="按钮"/>
-	<s:Button x="125" y="48" label="按钮"/>
-	<s:Button x="250" y="52" label="按钮"/>
+	<s:Button x="134" y="172" label="按钮" includeIn="erer"/>
+	<s:Button x="125" y="48" label="按钮" includeIn="erer"/>
+	<s:Button x="250" y="52" label="按钮" includeIn="erer"/>
 </mx:Module>

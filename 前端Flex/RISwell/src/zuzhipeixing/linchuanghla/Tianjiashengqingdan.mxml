@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
-		   xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" width="900" height="240" dropShadowVisible="false" borderVisible="false"
+		   xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" width="950" height="470" dropShadowVisible="false" borderVisible="false"
 		   >
 	<fx:Script>
 		<![CDATA[
@@ -12,11 +12,14 @@
 			import mx.managers.PopUpManager;
 			import mx.rpc.events.ResultEvent;
 			
+			import spark.events.IndexChangeEvent;
+			
 			import util.WenJianShangChuan;
 			
 			var xingbieshuju:ArrayCollection=new ArrayCollection(["男","女","未知"]);
+			var fasongfangshi:ArrayCollection=new ArrayCollection(["送病房","门诊自取","Fax","Email","快递","快递到付","挂号信","其他"]);
 			var shangchuan:WenJianShangChuan=new WenJianShangChuan();
-		
+			
 			
 			protected function titlewindow1_closeHandler(event:CloseEvent):void
 			{
@@ -26,27 +29,91 @@
 			protected function tianjiaanniu_clickHandler(event:MouseEvent):void
 			{
 				var ls:Object=new Object();
-				ls.huanzhexingming=huanzhexingming.text;
-				ls.xingbie=xingbie.selectedItem;
-				ls.chushengriqi=chushengriqi.text;
-				ls.zhuyuan=zhuyuan.selected;
-				ls.menzhen=menzhen.selected;
+				
+				//患者姓名
+				ls.huanzhexingming  =huanzhexingming.text;
+				//性别
+				ls.xingbie  =xingbie.selectedItem;
+				//出生日期
+				ls.chushengriqi  =chushengriqi.text;
+				//身份证号
+				ls.shenfenzhenghao  =shenfenzhenghao.text;
+				//联系电话
+				ls.lianxidianhua  =lianxidianhua.text;
+				//fax
+				ls.fax  =fax.text;
+				//Email
+				ls.email  =email.text;
+				//邮编 
+				ls.youbian  =youbian.text;
+				//通讯地址
+				ls.tongxundizhi  =tongxundizhi.text;
+				//临床诊断
+				ls.linchuangzhenduan  =linchuangzhenduan.text;
+				//住院
+				ls.zhuyuan  =zhuyuan.selected;
+				//门诊
+				ls.menzhen  =menzhen.selected;
+				
+				//床号
+				ls.chuanghao  =chuanghao.text;
+				//住院号
+				ls.zhuyuanhao  =zhuyuanhao.text;
+				//申请医院
+				ls.shenqingyiyuan  =shenqingyiyuan.text;
+				//申请医生
+				ls.shenqingyisheng  =shenqingyisheng.text;
+				//采样日起
+				ls.caiyangriqi  =caiyangriqi.text;
+				//报告发送方式
+				if(qitafasongfangshi.text!="")
+				{
+					ls.baogaofasongfangshi  =qitafasongfangshi.text;
+				}else
+				{
+					ls.baogaofasongfangshi  =baogaofasongfangshi.selectedItem;
+				}
+			
+				//收样者
+				ls.shouyangzhe  =shouyangzhe.text;
+				//收样日期
+				ls.shouyangriqi  =shouyangriqi.text;
+				//生成检测单日期
+				ls.shengchengjiancedanriqi  =shengchengjiancedanriqi.text;
+				//备注
+				ls.beizhu   =beizhu.text;
+				
+				
 				ls.wenjian=shangchuan.s4wenjianmings();
+				
 				tianjiashenqingdanhttp.send(ls);
 			}
 			
-
+			
 			protected function tianjiashenqingdanhttp_resultHandler(event:ResultEvent):void
 			{
 				shangchuan.s5shangchuan(event);
 				PopUpManager.removePopUp(this);
 			}
-
+			
 			protected function tianjianfujiananniu_clickHandler(event:MouseEvent):void
 			{
 				shangchuan.s1guolvqi="*.pdf;*.xls";
 				shangchuan.s2xuanzewanbi(function():void{fujian.text="选择"+shangchuan.s4wenjianmings().length+"个文件";});
 				shangchuan.s3xuanzewenjian();
+			}
+			
+
+			protected function baogaofasongfangshi_changeHandler(event:IndexChangeEvent):void
+			{
+				if(fasongfangshi.getItemAt(event.newIndex)=="其他")
+				{
+					qitafasongfangshi.enabled=true;
+				}else
+				{
+					qitafasongfangshi.enabled=false;
+					qitafasongfangshi.text="";
+				}
 			}
 
 		]]>
@@ -56,35 +123,89 @@
 	</fx:Declarations>
 	<s:TitleWindow x="0" y="0" width="100%" height="100%" close="titlewindow1_closeHandler(event)" title="添加检测申请单" id="zhujiemian">
 		<s:controlBarContent>
-			<mx:Spacer x="-12" y="219" width="792" height="20"/>
+			<mx:Spacer x="-12" y="219" width="840" height="20"/>
 			<s:Button label="添加" id="tianjiaanniu" click="tianjiaanniu_clickHandler(event)"/>
 			
 		</s:controlBarContent>
 		<mx:Form x="0" y="0" width="300" height="100%">
 			<mx:FormItem label="患者姓名">
-				<s:TextInput id="huanzhexingming" width="128" height="22"/>
+				<s:TextInput id="huanzhexingming" width="177" height="22"/>
 			</mx:FormItem>
 			<mx:FormItem label="性别">
-				<s:DropDownList x="55" y="3" width="128" id="xingbie" dataProvider="{xingbieshuju}"></s:DropDownList>
+				<s:DropDownList x="55" y="3" width="177" id="xingbie" dataProvider="{xingbieshuju}"></s:DropDownList>
 			</mx:FormItem>
 			<mx:FormItem label="出生日期">
-				<mx:DateField id="chushengriqi" width="128" formatString="YYYY-MM-DD"/>
+				<mx:DateField id="chushengriqi" width="177" formatString="YYYY-MM-DD"/>
+			</mx:FormItem>
+			<mx:FormItem label="身份证号">
+				<s:TextInput width="177" id="shenfenzhenghao"/>
+			</mx:FormItem>
+			<mx:FormItem label="联系电话">
+				<s:TextInput width="177" id="lianxidianhua"/>
+			</mx:FormItem>
+			<mx:FormItem label="Fax">
+				<s:TextInput width="177" id="fax"/>
+			</mx:FormItem>
+			<mx:FormItem label="Email">
+				<s:TextInput width="177" id="email"/>
+			</mx:FormItem>
+			<mx:FormItem label="邮编">
+				<s:TextInput width="177" id="youbian"/>
+			</mx:FormItem>
+			<mx:FormItem label="通讯地址">
+				<s:TextArea height="67" width="177" id="tongxundizhi"/>
 			</mx:FormItem>
 		</mx:Form>
 		<mx:Form x="300" y="0" width="300" height="100%">
+			<mx:FormItem label="临床诊断">
+				<s:TextArea height="67" id="linchuangzhenduan" width="177"/>
+			</mx:FormItem>
 			<mx:FormItem label="住院">
 				<s:CheckBox id="zhuyuan"/>
 			</mx:FormItem>
 			<mx:FormItem label="门诊">
 				<s:CheckBox id="menzhen"/>
 			</mx:FormItem>
+			<mx:FormItem label="床号">
+				<s:TextInput width="177" id="chuanghao"/>
+			</mx:FormItem>
+			<mx:FormItem label="住院号">
+				<s:TextInput width="177" id="zhuyuanhao"/>
+			</mx:FormItem>
 		</mx:Form>
-		<mx:Form x="600" y="0" width="300" height="100%">
-			<mx:FormItem label="附件" textAlign="left">
-				<s:HGroup x="35" y="1" width="182" height="22">
-					<s:TextInput width="158" id="fujian" height="22"/>
+		<mx:Form x="600" y="0" width="326" height="100%">
+			<mx:FormItem label="申请医院">
+				<s:TextInput id="shenqingyiyuan" width="177"/>
+			</mx:FormItem>
+			<mx:FormItem label="申请医生" width="280">
+				<s:TextInput id="shenqingyisheng" width="177"/>
+			</mx:FormItem>
+			<mx:FormItem label="采样日起">
+				<mx:DateField x="74" y="2" width="177" id="caiyangriqi" formatString="YYYY-MM-DD"/>
+			</mx:FormItem>
+			<mx:FormItem label="报告发送方式">
+				<s:DropDownList x="64" y="2" width="177" id="baogaofasongfangshi" dataProvider="{fasongfangshi}" change="baogaofasongfangshi_changeHandler(event)"></s:DropDownList>
+			</mx:FormItem>
+			<mx:FormItem>
+				<s:TextInput width="177" id="qitafasongfangshi" enabled="false"/>
+			</mx:FormItem>
+			<mx:FormItem label="附件" textAlign="left" width="287">
+				<s:HGroup x="35" y="1" width="186" height="22">
+					<s:TextInput width="152" id="fujian" height="22"/>
 					<s:Button width="20" id="tianjianfujiananniu" click="tianjianfujiananniu_clickHandler(event)" height="22"/>
 				</s:HGroup>
+			</mx:FormItem>
+			<mx:FormItem label="收样者">
+				<s:TextInput id="shouyangzhe" width="177"/>
+			</mx:FormItem>
+			<mx:FormItem label="收样日期">
+				<mx:DateField width="177" id="shouyangriqi" formatString="YYYY-MM-DD"/>
+			</mx:FormItem>
+			<mx:FormItem label="生成检测单日期">
+				<mx:DateField width="177" id="shengchengjiancedanriqi" formatString="YYYY-MM-DD"/>
+			</mx:FormItem>
+			<mx:FormItem label="备注">
+				<s:TextArea height="67" id="beizhu" width="177"/>
 			</mx:FormItem>
 		</mx:Form>
 	</s:TitleWindow>

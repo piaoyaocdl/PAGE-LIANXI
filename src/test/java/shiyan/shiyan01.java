@@ -1,18 +1,27 @@
 package shiyan;
 
-import java.io.IOException;
-import java.net.URL;
+import java.io.File;
 
-import org.dom4j.DocumentException;
 import org.junit.Test;
 
 public class shiyan01
 {
 
 	@Test
-	public void shiyan() throws DocumentException, IOException
+	public void deleteFile()
 	{
-		URL ls = ClassLoader.getSystemResource("ReportTemplate/shiyan.xml");
-		System.out.println(ls.toString());
+		File file = new File("C:/Users/HSWC/Desktop/11");
+
+		if (file.exists() && file.isDirectory())
+		{
+			File[] files = file.listFiles();
+			for (int i = 0; i < files.length; i++)
+			{
+				if (files[i].renameTo(files[i]))
+				{
+					files[i].delete();
+				}
+			}
+		}
 	}
 }

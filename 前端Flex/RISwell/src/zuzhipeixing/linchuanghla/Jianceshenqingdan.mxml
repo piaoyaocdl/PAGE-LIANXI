@@ -65,10 +65,10 @@
 					tanchu.shuju=new ArrayCollection(ls);
 					PopUpManager.addPopUp(tanchu,this,true);
 					PopUpManager.centerPopUp(tanchu);
-				
+					
 				}
 			}
-
+			
 			//点击下载报表
 			protected function dayinbaobiao_clickHandler(event:MouseEvent):void
 			{
@@ -78,7 +78,7 @@
 				xiazaiqi.s2setCanShu(ls);
 				xiazaiqi.s3xiaZai("shiyan.doc");
 			}
-
+			
 		]]>
 	</fx:Script>
 	
@@ -95,15 +95,16 @@
 			<s:Button x="108" y="10.5" label="查询" id="chaxunanniu" click="chaxunanniu_clickHandler(event)"/>
 			<s:Button x="10" y="38.5" label="下载报表" width="80" id="dayinbaobiao" click="dayinbaobiao_clickHandler(event)"/>
 		</s:BorderContainer>
-		<s:BorderContainer x="0" y="70" width="100%" height="100%" borderVisible="true" borderColor="#CCCCCC">
+		<s:BorderContainer x="0" y="70" width="1200" height="100%" borderVisible="true" borderColor="#CCCCCC">
 			<mx:DataGrid x="0" y="0" borderVisible="false" width="100%" height="100%" dataProvider="{biaogeshuju}"  id="biaogeshenqingdan">
 				<mx:columns>
-					<mx:DataGridColumn headerText="患者姓名" dataField="huanzhexingming"/>
-					<mx:DataGridColumn headerText="性别" dataField="xingbie"/>
-					<mx:DataGridColumn headerText="出生日期"  dataField="chushengriqi" >
+					<mx:DataGridColumn headerText="患者姓名" dataField="huanzhexingming" width="80"/>
+					<mx:DataGridColumn headerText="性别" dataField="xingbie" width="35"/>
+					<mx:DataGridColumn headerText="出生日期"  dataField="chushengriqi" width="60" >
 						
 					</mx:DataGridColumn>
-					<mx:DataGridColumn dataField="zhuyuan" headerText="住院">
+					<mx:DataGridColumn headerText="联系电话"/>
+					<mx:DataGridColumn dataField="zhuyuan" headerText="住院"  width="35">
 						<mx:itemRenderer>  
 							<fx:Component>  
 								<mx:CheckBox textAlign="center" selected="{data.zhuyuan}" enabled="false" >  
@@ -111,7 +112,7 @@
 							</fx:Component>  
 						</mx:itemRenderer>  
 					</mx:DataGridColumn>
-					<mx:DataGridColumn dataField="menzhen" headerText="门诊">
+					<mx:DataGridColumn dataField="menzhen" headerText="门诊"  width="35">
 						<mx:itemRenderer>  
 							<fx:Component>  
 								<mx:CheckBox textAlign="center" selected="{data.menzhen}" enabled="false" >  
@@ -119,6 +120,15 @@
 							</fx:Component>  
 						</mx:itemRenderer>  
 					</mx:DataGridColumn>
+					<mx:DataGridColumn headerText="临床诊断"/>
+					<mx:DataGridColumn headerText="申请医院"/>
+					<mx:DataGridColumn headerText="申请医生"/>
+					<mx:DataGridColumn headerText="采样日起"/>
+					<mx:DataGridColumn headerText="报告发送方式"/>
+					<mx:DataGridColumn headerText="收样者"/>
+					<mx:DataGridColumn headerText="收样日期"/>
+					<mx:DataGridColumn headerText="生成检测单日期"/>
+					<mx:DataGridColumn headerText="备注"/>
 					<mx:DataGridColumn headerText="附件">
 						<mx:itemRenderer>  
 							<fx:Component>  
@@ -127,6 +137,7 @@
 							</fx:Component>  
 						</mx:itemRenderer>  
 					</mx:DataGridColumn>
+					<mx:DataGridColumn/>
 				</mx:columns>
 			</mx:DataGrid>
 		</s:BorderContainer>
