@@ -127,13 +127,19 @@ public class ChuShiHua implements ApplicationListener<ApplicationReadyEvent>
 		File file = null;
 
 		file = new File(GongJu.getXiangMuLuJing() + "临时文件");
-		if (!file.exists() && !file.isDirectory())
+		if (!file.exists() || !file.isDirectory())
 		{
 			file.mkdir();
 		}
 		
 		file = new File(GongJu.getXiangMuLuJing() + "上传文件");
-		if (!file.exists() && !file.isDirectory())
+		if (!file.exists() || !file.isDirectory())
+		{
+			file.mkdir();
+		}
+		
+		file = new File(GongJu.getXiangMuLuJing() + "异常记录");
+		if (!file.exists() || !file.isDirectory())
 		{
 			file.mkdir();
 		}

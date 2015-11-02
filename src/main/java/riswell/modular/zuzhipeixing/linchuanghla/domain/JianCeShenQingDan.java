@@ -48,7 +48,7 @@ public class JianCeShenQingDan
 	@Column(length = 20, nullable = true, unique = false)
 	private String shouyangzhe;
 
-	@Column(length = 50, nullable = true, unique = false)
+	@Column(length = 500, nullable = true, unique = false)
 	private String beizhu;
 
 	@Column(length = 20, nullable = true, unique = false)
@@ -60,7 +60,7 @@ public class JianCeShenQingDan
 	@Column(length = 50, nullable = true, unique = false)
 	private String zhuyuanhao;
 
-	@Column(length = 50, nullable = true, unique = false)
+	@Column(length = 20, nullable = true, unique = false)
 	private String lianxidianhua;
 
 	@Column(length = 50, nullable = true, unique = false)
@@ -78,13 +78,13 @@ public class JianCeShenQingDan
 	@Column(length = 50, nullable = true, unique = false)
 	private String youbian;
 
-	@Column(length = 50, nullable = true, unique = false)
+	@Column(length = 200, nullable = true, unique = false)
 	private String tongxundizhi;
 
 	@Column(length = 50, nullable = true, unique = false)
 	private String baogaofasongfangshi;
 
-	@Column(length = 50, nullable = true, unique = false)
+	@Column(length = 200, nullable = true, unique = false)
 	private String linchuangzhenduan;
 
 	@Temporal(TemporalType.DATE)

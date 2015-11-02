@@ -2,6 +2,7 @@ package riswell.modular.sysm.ctrl;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -16,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 
-import lombok.SneakyThrows;
 import riswell.modular.sysm.domain.WenJian;
 import riswell.util.GongJu;
 
@@ -96,17 +96,33 @@ public class XiTongJianDan
 		if (!file.isEmpty())
 		{
 			byte[] bytes;
+
+			BufferedOutputStream stream = null;
 			try
 			{
 				bytes = file.getBytes();
-				BufferedOutputStream stream = new BufferedOutputStream(
+				stream = new BufferedOutputStream(
 						new FileOutputStream(new File(GongJu.getXiangMuLuJing() + "上传文件/" + wenjianming)));
 				stream.write(bytes);
-				stream.close();
+			} catch (FileNotFoundException e)
+			{
+				e.printStackTrace();
 			} catch (IOException e)
 			{
 				e.printStackTrace();
-				return "EER";
+			} finally
+			{
+				if (stream != null)
+				{
+
+					try
+					{
+						stream.close();
+					} catch (IOException e)
+					{
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		return "OK";
@@ -121,11 +137,16 @@ public class XiTongJianDan
 	 */
 	@RequestMapping("/xiazaiwenjian")
 	@ResponseBody
-	@SneakyThrows
 	public ResponseEntity<byte[]> xiazaiwenjian(String json)
 	{
 		WenJian wenJian = JSON.parseObject(json, WenJian.class);
-		ResponseEntity<byte[]> ls = GongJu.xiazai(wenJian.getXinwenjianming(), wenJian.getYuanwenjianming());
+		ResponseEntity<byte[]> ls = null;
+		try
+		{
+			ls = GongJu.xiazai(wenJian.getXinwenjianming(), wenJian.getYuanwenjianming());
+		} catch (IOException e)
+		{
+		}
 		return ls;
 	}
 }

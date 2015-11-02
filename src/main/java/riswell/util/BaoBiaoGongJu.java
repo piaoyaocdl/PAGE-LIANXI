@@ -1,7 +1,9 @@
 package riswell.util;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
@@ -61,13 +63,38 @@ public class BaoBiaoGongJu
 	 *            指定的xml
 	 * @throws IOException
 	 */
-	public static void xieXML(String filePathAndName, Document document) throws IOException
+	public static void xieXML(String filePathAndName, Document document)
 	{
 		OutputFormat format = new OutputFormat("   ", true);
 		format.setEncoding("UTF-8");
-		XMLWriter xmlWriter = new XMLWriter(new FileOutputStream(filePathAndName), format);
-		xmlWriter.write(document);
-		xmlWriter.close();
+		XMLWriter xmlWriter = null;
+		try
+		{
+			xmlWriter = new XMLWriter(new FileOutputStream(filePathAndName), format);
+			xmlWriter.write(document);
+		} catch (UnsupportedEncodingException e)
+		{
+			e.printStackTrace();
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		} finally
+		{
+			if (xmlWriter != null)
+			{
+
+				try
+				{
+					xmlWriter.close();
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	/**
@@ -78,12 +105,19 @@ public class BaoBiaoGongJu
 	 * @return XML的内存文件
 	 * @throws DocumentException
 	 */
-	public static Document getDocument(String fileName) throws DocumentException
+	public static Document getDocument(String fileName)
 	{
 
 		URL ls = GongJu.getReportTemplate(fileName);
 		SAXReader reader = new SAXReader();
-		Document document = reader.read(ls);
+		Document document = null;
+		try
+		{
+			document = reader.read(ls);
+		} catch (DocumentException e)
+		{
+			e.printStackTrace();
+		}
 		return document;
 	}
 

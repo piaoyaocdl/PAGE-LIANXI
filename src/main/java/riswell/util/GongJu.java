@@ -1,11 +1,28 @@
 package riswell.util;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
+
+import javax.mail.Authenticator;
+import javax.mail.Message.RecipientType;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -16,6 +33,125 @@ import org.springframework.http.ResponseEntity;
 
 public class GongJu
 {
+
+	/**
+	 * 发送邮件
+	 * 
+	 * @param yichangwenjian
+	 *            异常的记录文件
+	 * @throws MessagingException
+	 * @throws IOException
+	 */
+	public static void fasongyoujian(String yichangwenjian) throws MessagingException
+	{
+		final Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.host", "smtp.163.com");
+		props.put("mail.smtp.port", "25");
+		// 设置发送者帐号密码
+		props.put("mail.user", "ris_yichangjilu@163.com");
+		props.put("mail.password", "yichangjilu");
+
+		Authenticator authenticator = new Authenticator()
+		{
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication()
+			{
+				String userName = props.getProperty("mail.user");
+				String password = props.getProperty("mail.password");
+				return new PasswordAuthentication(userName, password);
+			}
+		};
+		Session mailSession = Session.getInstance(props, authenticator);
+		MimeMessage message = new MimeMessage(mailSession);
+		InternetAddress form = new InternetAddress(props.getProperty("mail.user"));
+		message.setFrom(form);
+
+		// 设置收件人
+		InternetAddress to = new InternetAddress("ris_yichangjilu@163.com");
+		message.setRecipient(RecipientType.TO, to);
+
+		// 设置邮件标题
+		message.setSubject("异常记录" + (new SimpleDateFormat("yyyy-MM-dd")).format(new Date()));
+
+		// 设置邮件的内容体
+		message.setContent(readTxtFile(yichangwenjian), "text/html;charset=UTF-8");
+
+		Transport.send(message);
+	}
+
+	/**
+	 * 读取文本文件
+	 * 
+	 * @param filePathAndName
+	 *            文件的路径和名称
+	 * @throws IOException
+	 */
+	public static String readTxtFile(String filePathAndName)
+	{
+
+		String re = "文件没有找到";
+		StringBuilder ls = new StringBuilder("");
+		String encoding = "UTF-8";
+
+		File file = new File(filePathAndName);
+		if (file.exists() && file.isFile())
+		{
+			InputStreamReader read = null;
+			BufferedReader bufferedReader = null;
+			try
+			{
+				read = new InputStreamReader(new FileInputStream(file), encoding);
+				bufferedReader = new BufferedReader(read);
+				String lineTxt = null;
+				while ((lineTxt = bufferedReader.readLine()) != null)
+				{
+					ls.append("<p>" + lineTxt + "<p>");
+				}
+			} catch (UnsupportedEncodingException e)
+			{
+				e.printStackTrace();
+			} catch (FileNotFoundException e)
+			{
+				e.printStackTrace();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			} finally
+			{
+				if (bufferedReader != null)
+				{
+
+					try
+					{
+						bufferedReader.close();
+					} catch (IOException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				if (read != null)
+				{
+
+					try
+					{
+						read.close();
+					} catch (IOException e)
+					{
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+		if (ls.length() >= 20)
+		{
+			re = ls.toString();
+		}
+		return re;
+
+	}
+
 	/**
 	 * Spring MVC 的重定向
 	 */
@@ -113,10 +249,10 @@ public class GongJu
 	 * 下载模版
 	 * 
 	 * @param mobanming
-	 * @return 
+	 * @return
 	 */
 	public static URL getReportTemplate(String mobanming)
 	{
-		return ClassLoader.getSystemResource("ReportTemplate/"+mobanming);
+		return ClassLoader.getSystemResource("ReportTemplate/" + mobanming);
 	}
 }

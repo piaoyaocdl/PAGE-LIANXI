@@ -1,5 +1,6 @@
 package riswell.modular.zuzhipeixing.linchuanghla.ctrl;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -118,11 +119,11 @@ public class JianCeShenQingDanCtrl
 	 * 
 	 * @param json
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping("/xiazaibaobiao")
 	@ResponseBody
-	@SneakyThrows
-	public ResponseEntity<byte[]> xiazaibaobiao(String json)
+	public ResponseEntity<byte[]> xiazaibaobiao(String json) throws IOException
 	{
 		List<JianCeShenQingDan> jc = jianceshengqingdandao.findAll();
 

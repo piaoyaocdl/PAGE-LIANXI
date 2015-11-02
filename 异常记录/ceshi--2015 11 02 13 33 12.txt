@@ -1,0 +1,114 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+异常开始
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+用户：ceshi，发出的请求：@RequestMapping("/zuzhipeixing/linchuanghla/tianjiashenqingdan
+携带参数：
+		-k-  fax
+			-v-  滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚滚
+		-k-  shenqingyisheng
+			-v-  
+		-k-  email
+			-v-  
+		-k-  caiyangriqi
+			-v-  
+		-k-  youbian
+			-v-  
+		-k-  tongxundizhi
+			-v-  
+		-k-  menzhen
+			-v-  false
+		-k-  linchuangzhenduan
+			-v-  
+		-k-  shouyangzhe
+			-v-  
+		-k-  shouyangriqi
+			-v-  
+		-k-  shengchengjiancedanriqi
+			-v-  
+		-k-  huanzhexingming
+			-v-  
+		-k-  beizhu
+			-v-  
+		-k-  chushengriqi
+			-v-  
+		-k-  chuanghao
+			-v-  
+		-k-  shenfenzhenghao
+			-v-  
+		-k-  zhuyuanhao
+			-v-  
+		-k-  zhuyuan
+			-v-  false
+		-k-  lianxidianhua
+			-v-  
+		-k-  shenqingyiyuan
+			-v-  
+异常内容：
+			com.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long for column 'fax' at row 1
+
+			could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+			org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:259)
+			org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:221)
+			org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.translateExceptionIfPossible(AbstractEntityManagerFactoryBean.java:417)
+			org.springframework.dao.support.ChainedPersistenceExceptionTranslator.translateExceptionIfPossible(ChainedPersistenceExceptionTranslator.java:59)
+			org.springframework.dao.support.DataAccessUtils.translateIfNecessary(DataAccessUtils.java:213)
+			org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:147)
+			org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+			org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:121)
+			org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+			org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+			org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+			org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+			com.sun.proxy.$Proxy88.save(Unknown Source)
+			riswell.modular.zuzhipeixing.linchuanghla.ctrl.JianCeShenQingDanCtrl.tianjiashenqingdan(JianCeShenQingDanCtrl.java:112)
+			riswell.modular.zuzhipeixing.linchuanghla.ctrl.JianCeShenQingDanCtrl$$FastClassBySpringCGLIB$$adc0a180.invoke(<generated>)
+			org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+			org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:717)
+			org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+			org.springframework.aop.aspectj.AspectJAfterThrowingAdvice.invoke(AspectJAfterThrowingAdvice.java:58)
+			org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:168)
+			org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:52)
+			org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:168)
+			org.springframework.aop.aspectj.AspectJAfterAdvice.invoke(AspectJAfterAdvice.java:43)
+			org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:168)
+			org.springframework.aop.framework.adapter.AfterReturningAdviceInterceptor.invoke(AfterReturningAdviceInterceptor.java:52)
+			org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:168)
+			org.springframework.aop.aspectj.AspectJAfterThrowingAdvice.invoke(AspectJAfterThrowingAdvice.java:58)
+			org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:168)
+			org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+			org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:281)
+			org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+			org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+			org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+			org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+			org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:653)
+			riswell.modular.zuzhipeixing.linchuanghla.ctrl.JianCeShenQingDanCtrl$$EnhancerBySpringCGLIB$$2805e216.tianjiashenqingdan(<generated>)
+			sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+			sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+			sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+			java.lang.reflect.Method.invoke(Method.java:497)
+			org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:221)
+			org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:137)
+			org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:111)
+			org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:806)
+			org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:729)
+			org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+			org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:959)
+			org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:893)
+			org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+			org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:861)
+			javax.servlet.http.HttpServlet.service(HttpServlet.java:622)
+			org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+			javax.servlet.http.HttpServlet.service(HttpServlet.java:729)
+			org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:291)
+			org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+			org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+			org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:239)
+			org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+			org.apache.shiro.web.servlet.ProxiedFilterChain.doFilter(ProxiedFilterChain.java:61)
+			org.apache.shiro.web.servlet.AdviceFilter.executeChain(AdviceFilter.java:108)
+			org.apache.shiro.web.servlet.AdviceFilter.doFilterInternal(AdviceFilter.java:137)
+			org.apache.shiro.web.servlet.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:125)
+			org.apache.shiro.web.servlet.ProxiedFilterChain.doFilter(ProxiedFilterChain.java:66)
+			org.apache.shiro.web.servlet.AbstractShiroFilter.executeChain(AbstractShiroFilter.java:449)
+			org.apache.shiro.web.servlet.AbstractS
